@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2A8C1842204D8035002299AD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8C1841204D8035002299AD /* main.cpp */; };
+		2AAACD4C2052E6F9008DBABB /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 2AAACD4B2052E6F9008DBABB /* glad.c */; };
+		2AAACD4F2052E70D008DBABB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAACD4E2052E70D008DBABB /* OpenGL.framework */; };
+		2AAACD512052E757008DBABB /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAACD502052E757008DBABB /* libglfw.3.2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,11 @@
 /* Begin PBXFileReference section */
 		2A8C183E204D8035002299AD /* testOpenGLByCPlusPlus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testOpenGLByCPlusPlus; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A8C1841204D8035002299AD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2AAACD492052E6D7008DBABB /* glad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glad.h; path = testOpenGLByCPlusPlus/Include/glad.h; sourceTree = SOURCE_ROOT; };
+		2AAACD4A2052E6D7008DBABB /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = khrplatform.h; path = testOpenGLByCPlusPlus/Include/khrplatform.h; sourceTree = SOURCE_ROOT; };
+		2AAACD4B2052E6F9008DBABB /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = glad.c; path = testOpenGLByCPlusPlus/glad.c; sourceTree = SOURCE_ROOT; };
+		2AAACD4E2052E70D008DBABB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		2AAACD502052E757008DBABB /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +40,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AAACD512052E757008DBABB /* libglfw.3.2.dylib in Frameworks */,
+				2AAACD4F2052E70D008DBABB /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +53,7 @@
 			children = (
 				2A8C1840204D8035002299AD /* testOpenGLByCPlusPlus */,
 				2A8C183F204D8035002299AD /* Products */,
+				2AAACD4D2052E70D008DBABB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +68,30 @@
 		2A8C1840204D8035002299AD /* testOpenGLByCPlusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				2AAACD482052E6B9008DBABB /* include */,
 				2A8C1841204D8035002299AD /* main.cpp */,
 			);
 			path = testOpenGLByCPlusPlus;
+			sourceTree = "<group>";
+		};
+		2AAACD482052E6B9008DBABB /* include */ = {
+			isa = PBXGroup;
+			children = (
+				2AAACD4B2052E6F9008DBABB /* glad.c */,
+				2AAACD492052E6D7008DBABB /* glad.h */,
+				2AAACD4A2052E6D7008DBABB /* khrplatform.h */,
+			);
+			name = include;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		2AAACD4D2052E70D008DBABB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2AAACD502052E757008DBABB /* libglfw.3.2.dylib */,
+				2AAACD4E2052E70D008DBABB /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A8C1842204D8035002299AD /* main.cpp in Sources */,
+				2AAACD4C2052E6F9008DBABB /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +267,14 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7M65Q3SXN8;
+				HEADER_SEARCH_PATHS = (
+					"${glfw_header}",
+					"${glad_header}",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${glfw_lib}",
+					/usr/local/Cellar/glfw/3.2.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -243,6 +284,14 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7M65Q3SXN8;
+				HEADER_SEARCH_PATHS = (
+					"${glfw_header}",
+					"${glad_header}",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${glfw_lib}",
+					/usr/local/Cellar/glfw/3.2.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
