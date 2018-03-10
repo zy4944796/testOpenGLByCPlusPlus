@@ -75,6 +75,7 @@ int main(int argc, const char * argv[]) {
     //glViewport(0,0,800,600);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    
     openGLTool::Shader shader("/Users/zhangyu/MyWork/Demo/testOpenGLByCPlusPlus/testOpenGLByCPlusPlus/Shader/v.glsl",
                               "/Users/zhangyu/MyWork/Demo/testOpenGLByCPlusPlus/testOpenGLByCPlusPlus/Shader/f.glsl");
     
@@ -95,20 +96,29 @@ int main(int argc, const char * argv[]) {
         -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
     };
     
-    unsigned int VBO, VAO;
+    unsigned int indices[] = {
+        0,1,3,
+        1,2,3
+    };
+    
+    unsigned int VBO, VAO,EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),indices,GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     
     glVertexAttribPointer(2, 2, GL_FLOAT,GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
@@ -121,20 +131,32 @@ int main(int argc, const char * argv[]) {
     // as we only have a single shader, we could also just activate our shader once beforehand if we want to
     //glUseProgram(shaderProgram);
     
-    int width, height,nrChannels;
-    
-    unsigned char *image = stbi_load("picture3.jpg", &width, &height, &nrChannels, 0);
     
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);//绑定：opengl是个状态机，GL_TEXTURE_2D这个状态机中定义好的一状态，相当于一个坑，把这个坑里放入要处理的texture，在解绑之前，以后对GL_TEXTURE_2D操作都是对texture的操作，此时GL_TEXTURE_2D成了texture在状态机中别名。
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);//为材质生成渐远材质
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    
+    int width, height,nrChannels;
+    
+    unsigned char *image = stbi_load("/Users/zhangyu/MyWork/Demo/testOpenGLByCPlusPlus/testOpenGLByCPlusPlus/Texure/picture3.jpg", &width, &height, &nrChannels, 0);
+    
+    if (image) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        glGenerateMipmap(GL_TEXTURE_2D);//为材质生成渐远材质
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
     
     stbi_image_free(image);
     glBindTexture(GL_TEXTURE_2D, 0);//GL_TEXTURE_2D相当于加工器具的工槽，加工完器具要把器具拿走，位置释放出来。OPENGL是流水线操作和现实中的流水线很像。软件是现实的一种抽象表达。
-
 
     while (!glfwWindowShouldClose(window)) {
 
@@ -144,10 +166,9 @@ int main(int argc, const char * argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         //draw
-        //glBindVertexArray(VAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
-        
+   
         glBindTexture(GL_TEXTURE_2D, texture);
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

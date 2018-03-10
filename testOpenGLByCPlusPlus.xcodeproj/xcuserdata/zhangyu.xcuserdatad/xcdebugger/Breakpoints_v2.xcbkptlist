@@ -6,15 +6,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "testOpenGLByCPlusPlus/main.cpp"
-            timestampString = "542346288.015869"
+            timestampString = "542371384.668429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "main(int argc, const char * argv[])"
             landmarkType = "9">
          </BreakpointContent>

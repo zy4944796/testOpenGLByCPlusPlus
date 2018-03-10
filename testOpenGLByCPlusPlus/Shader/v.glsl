@@ -8,7 +8,7 @@ out vec2 TexCoord;
 
 void main()
 {
-    gl_Position = vec4(postion,1.0);
+    gl_Position = vec4(postion.x,-postion.y,postion.z,1.0);
     ourColor = color;
-    TexCoord = texCoord;
+    TexCoord = vec2(texCoord.x,texCoord.y);
 }
