@@ -11,6 +11,8 @@
 		2AAACD4C2052E6F9008DBABB /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 2AAACD4B2052E6F9008DBABB /* glad.c */; };
 		2AAACD4F2052E70D008DBABB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAACD4E2052E70D008DBABB /* OpenGL.framework */; };
 		2AAACD512052E757008DBABB /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAACD502052E757008DBABB /* libglfw.3.2.dylib */; };
+		2AAACD54205387C0008DBABB /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAACD53205387C0008DBABB /* libboost_system.dylib */; };
+		2AAACD5820539899008DBABB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AAACD5620539899008DBABB /* shader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +35,13 @@
 		2AAACD4B2052E6F9008DBABB /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = glad.c; path = testOpenGLByCPlusPlus/glad.c; sourceTree = SOURCE_ROOT; };
 		2AAACD4E2052E70D008DBABB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2AAACD502052E757008DBABB /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
+		2AAACD522052ED0D008DBABB /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_image.h; path = testOpenGLByCPlusPlus/Include/stb_image.h; sourceTree = SOURCE_ROOT; };
+		2AAACD53205387C0008DBABB /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../usr/local/Cellar/boost/1.66.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
+		2AAACD5520538808008DBABB /* picture3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = picture3.jpg; sourceTree = "<group>"; };
+		2AAACD5620539899008DBABB /* shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		2AAACD5720539899008DBABB /* shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		2AAACD5A2053CE79008DBABB /* f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = f.glsl; sourceTree = "<group>"; };
+		2AAACD5B2053CE82008DBABB /* v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = v.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AAACD54205387C0008DBABB /* libboost_system.dylib in Frameworks */,
 				2AAACD512052E757008DBABB /* libglfw.3.2.dylib in Frameworks */,
 				2AAACD4F2052E70D008DBABB /* OpenGL.framework in Frameworks */,
 			);
@@ -68,8 +78,11 @@
 		2A8C1840204D8035002299AD /* testOpenGLByCPlusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				2AAACD592053C9B0008DBABB /* Shader */,
 				2AAACD482052E6B9008DBABB /* include */,
 				2A8C1841204D8035002299AD /* main.cpp */,
+				2AAACD5620539899008DBABB /* shader.cpp */,
+				2AAACD5720539899008DBABB /* shader.hpp */,
 			);
 			path = testOpenGLByCPlusPlus;
 			sourceTree = "<group>";
@@ -77,6 +90,8 @@
 		2AAACD482052E6B9008DBABB /* include */ = {
 			isa = PBXGroup;
 			children = (
+				2AAACD5520538808008DBABB /* picture3.jpg */,
+				2AAACD522052ED0D008DBABB /* stb_image.h */,
 				2AAACD4B2052E6F9008DBABB /* glad.c */,
 				2AAACD492052E6D7008DBABB /* glad.h */,
 				2AAACD4A2052E6D7008DBABB /* khrplatform.h */,
@@ -88,10 +103,20 @@
 		2AAACD4D2052E70D008DBABB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AAACD53205387C0008DBABB /* libboost_system.dylib */,
 				2AAACD502052E757008DBABB /* libglfw.3.2.dylib */,
 				2AAACD4E2052E70D008DBABB /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2AAACD592053C9B0008DBABB /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				2AAACD5B2053CE82008DBABB /* v.glsl */,
+				2AAACD5A2053CE79008DBABB /* f.glsl */,
+			);
+			path = Shader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AAACD5820539899008DBABB /* shader.cpp in Sources */,
 				2A8C1842204D8035002299AD /* main.cpp in Sources */,
 				2AAACD4C2052E6F9008DBABB /* glad.c in Sources */,
 			);
@@ -269,11 +295,14 @@
 				DEVELOPMENT_TEAM = 7M65Q3SXN8;
 				HEADER_SEARCH_PATHS = (
 					"${glfw_header}",
+					"${boost_header}",
 					"${glad_header}",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"${glfw_lib}",
 					/usr/local/Cellar/glfw/3.2.1/lib,
+					"${boost_lib}",
+					/usr/local/Cellar/boost/1.66.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -286,11 +315,14 @@
 				DEVELOPMENT_TEAM = 7M65Q3SXN8;
 				HEADER_SEARCH_PATHS = (
 					"${glfw_header}",
+					"${boost_header}",
 					"${glad_header}",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"${glfw_lib}",
 					/usr/local/Cellar/glfw/3.2.1/lib,
+					"${boost_lib}",
+					/usr/local/Cellar/boost/1.66.0/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

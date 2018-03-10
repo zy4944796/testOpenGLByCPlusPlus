@@ -2,11 +2,19 @@
 //  main.cpp
 //  testOpenGLByCPlusPlus
 
+#define STBI_ASSERT(x)
+//#define STBI_MALLOC
+//#define STBI_REALLOC
+//#define STBI_FREE
 
 #include <iostream>
 #include "glad.h"
 #include "GLFW/glfw3.h"
 #include<math.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "./Include/stb_image.h"
+#include <boost/filesystem.hpp>
+#include "shader.hpp"
 //#include <SOIL.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width,int height);
@@ -16,28 +24,28 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-const char *vertexShaderSource ="#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-"layout (location = 2) in vec2 texCoord;\n"
-"out vec3 ourColor;\n"
-"out vec2 TexCoord;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(position, 1.0);\n"
-"   ourColor = color;\n"
-"   TexCoord = texCoord;\n"
-"}\0";
-
-const char *fragmentShaderSource = "#version 330 core\n"
-"in vec3 ourColor;\n"
-"in vec2 TexCoord;\n"
-"out vec4 color;\n"
-"uniform sampler2D ourTexture;\n"
-"void main()\n"
-"{\n"
-"   color = texture(ourTexture, TexCoord);\n"
-"}\n\0";
+//const char *vertexShaderSource ="#version 330 core\n"
+//"layout (location = 0) in vec3 position;\n"
+//"layout (location = 1) in vec3 color;\n"
+//"layout (location = 2) in vec2 texCoord;\n"
+//"out vec3 ourColor;\n"
+//"out vec2 TexCoord;\n"
+//"void main()\n"
+//"{\n"
+//"   gl_Position = vec4(position, 1.0);\n"
+//"   ourColor = color;\n"
+//"   TexCoord = texCoord;\n"
+//"}\0";
+//
+//const char *fragmentShaderSource = "#version 330 core\n"
+//"in vec3 ourColor;\n"
+//"in vec2 TexCoord;\n"
+//"out vec4 color;\n"
+//"uniform sampler2D ourTexture;\n"
+//"void main()\n"
+//"{\n"
+//"   color = texture(ourTexture, TexCoord);\n"
+//"}\n\0";
 
 
 int main(int argc, const char * argv[]) {
@@ -67,41 +75,10 @@ int main(int argc, const char * argv[]) {
     //glViewport(0,0,800,600);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    unsigned int vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader,1,&vertexShaderSource,NULL);
-    glCompileShader(vertexShader);
-
-    int  success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-    if(!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
-
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if(!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    openGLTool::Shader shader("/Users/zhangyu/MyWork/Demo/testOpenGLByCPlusPlus/testOpenGLByCPlusPlus/Shader/v.glsl",
+                              "/Users/zhangyu/MyWork/Demo/testOpenGLByCPlusPlus/testOpenGLByCPlusPlus/Shader/f.glsl");
+    
+    shader.use();
 
 //    float vertices[] = {
 //        // positions         // colors
@@ -142,10 +119,11 @@ int main(int argc, const char * argv[]) {
     // glBindVertexArray(0);
 
     // as we only have a single shader, we could also just activate our shader once beforehand if we want to
-    glUseProgram(shaderProgram);
+    //glUseProgram(shaderProgram);
     
-    int width, height;
-    unsigned char* image ;//= SOIL_load_image("picture3.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+    int width, height,nrChannels;
+    
+    unsigned char *image = stbi_load("picture3.jpg", &width, &height, &nrChannels, 0);
     
     GLuint texture;
     glGenTextures(1, &texture);
@@ -154,7 +132,7 @@ int main(int argc, const char * argv[]) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);//为材质生成渐远材质
     
-    //SOIL_free_image_data(image);
+    stbi_image_free(image);
     glBindTexture(GL_TEXTURE_2D, 0);//GL_TEXTURE_2D相当于加工器具的工槽，加工完器具要把器具拿走，位置释放出来。OPENGL是流水线操作和现实中的流水线很像。软件是现实的一种抽象表达。
 
 
